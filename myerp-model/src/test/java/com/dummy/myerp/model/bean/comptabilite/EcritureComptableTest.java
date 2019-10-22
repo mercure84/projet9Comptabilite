@@ -52,6 +52,18 @@ public class EcritureComptableTest {
         vEcriture.getListLigneEcriture().add(this.createLigne(2, "3", "4"));
         Assert.assertEquals(vEcriture.getTotalDebit(), new BigDecimal("6" ));
 
+        // test si aucun montant au débit :
+
+        EcritureComptable vEcritureNull;
+        vEcritureNull = new EcritureComptable();
+        vEcritureNull.setLibelle("Test Total Débit ");
+        vEcritureNull.getListLigneEcriture().add(this.createLigne(1, null, "4.32"));
+        vEcritureNull.getListLigneEcriture().add(this.createLigne(1, null, "1"));
+        vEcritureNull.getListLigneEcriture().add(this.createLigne(2, null, "1.7"));
+        vEcritureNull.getListLigneEcriture().add(this.createLigne(2, null, "4"));
+        Assert.assertEquals(vEcritureNull.getTotalDebit(), new BigDecimal("0" ));
+
+
     }
 
     @Test
@@ -65,6 +77,18 @@ public class EcritureComptableTest {
         vEcriture.getListLigneEcriture().add(this.createLigne(2, null, "19.48"));
         vEcriture.getListLigneEcriture().add(this.createLigne(2, "4", "4.21"));
         Assert.assertEquals(vEcriture.getTotalCredit(), new BigDecimal("39.69" ));
+
+        // test si aucun montant au débit :
+
+
+        EcritureComptable vEcritureNull;
+        vEcritureNull = new EcritureComptable();
+        vEcritureNull.setLibelle("Test Total Débit ");
+        vEcritureNull.getListLigneEcriture().add(this.createLigne(1, "5", null));
+        vEcritureNull.getListLigneEcriture().add(this.createLigne(1, "52.63", null));
+        vEcritureNull.getListLigneEcriture().add(this.createLigne(2, "963.2", null));
+        vEcritureNull.getListLigneEcriture().add(this.createLigne(2, "59", null));
+        Assert.assertEquals(vEcritureNull.getTotalCredit(), new BigDecimal("0" ));
 
     }
 }
