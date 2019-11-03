@@ -34,8 +34,10 @@ public class ComptabiliteManagerImplTest {
 
     @Test(expected = FunctionalException.class)
     public void checkEcritureComptableUnitViolation() throws Exception {
-        EcritureComptable vEcritureComptable;
-        vEcritureComptable = new EcritureComptable();
+        EcritureComptable vEcritureComptable = new EcritureComptable();
+        vEcritureComptable.setJournal(new JournalComptable("TT", "Tests JM"));
+        vEcritureComptable.setDate(new Date());
+        vEcritureComptable.setLibelle("Libelle de test");
         manager.checkEcritureComptableUnit(vEcritureComptable);
     }
 
