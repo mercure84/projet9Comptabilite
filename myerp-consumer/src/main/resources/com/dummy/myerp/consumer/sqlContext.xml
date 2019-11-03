@@ -31,6 +31,14 @@
                 WHERE id = :id
             </value>
         </property>
+        <property name="SQLgetListSequenceEcritureComptable">
+            <value>
+                SELECT * FROM myerp.sequence_ecriture_comptable
+
+            </value>
+
+        </property>
+
         <property name="SQLgetEcritureComptableByRef">
             <value>
                 SELECT * FROM myerp.ecriture_comptable
@@ -89,6 +97,18 @@
                 WHERE ecriture_id = :ecriture_id
             </value>
         </property>
+
+        <property name="SQLinsertSequenceEcritureComptable">
+            <value>
+                INSERT INTO myerp.sequence_ecriture_comptable (
+                journal_code, annee, derniere_valeur
+                ) VALUES (
+                :journal_code, :annee, :derniere_valeur
+                )
+            </value>
+        </property>
+
+
     </bean>
 
 </beans>
