@@ -1,6 +1,7 @@
 package com.dummy.myerp.business.impl.manager;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
@@ -38,6 +39,10 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         return getDaoProxy().getComptabiliteDao().getListCompteComptable();
     }
 
+    public List<SequenceEcritureComptable> getListSequenceEcritureComptable(){
+        return getDaoProxy().getComptabiliteDao().getListSequenceEcritureComptable();
+    }
+
 
     @Override
     public List<JournalComptable> getListJournalComptable() {
@@ -60,11 +65,12 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     public synchronized void addReference(EcritureComptable pEcritureComptable) throws FunctionalException {
         // TODO à implémenter
         // Bien se réferer à la JavaDoc de cette méthode !
-        this.checkEcritureComptable(pEcritureComptable);
-
         /* Le principe :
                 1.  Remonter depuis la persitance la dernière valeur de la séquence du journal pour l'année de l'écriture
                     (table sequence_ecriture_comptable)
+
+
+
                 2.  * S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
                         1. Utiliser le numéro 1.
                     * Sinon :
@@ -74,9 +80,35 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                     (table sequence_ecriture_comptable)
          */
 
+        List<SequenceEcritureComptable> listSequenceEcritureComptable = this.getListSequenceEcritureComptable();
+        int annee = pEcritureComptable.getDate().getYear();
+        int referenceNum = 1;
+            // si la liste des séquences n'est pas vide, on prend chaque séquence et si l'année de la séquence est celle de l'écriture, alors on regarde la référence (int)
+            // on regarde la valeur la plus haute et on lui donne +1 ou à défaut reference vaut 1;
+        if (listSequenceEcritureComptable.size() > 0) {
+            for (SequenceEcritureComptable sequenceEcritureComptable:
+                 listSequenceEcritureComptable) {
+                if (sequenceEcritureComptable.getAnnee() == annee){
+                    referenceNum = (sequenceEcritureComptable.getDerniereValeur() == referenceNum) ? (referenceNum + 1) : referenceNum;
+                }
+            } ;
+        }
 
+        // construction de la référence de l'écriture selon RG_Compta_5 :
+        //on met la référence numérique en format XXXXX
+        String referenceNumFormatee = null ;
+        int longueurReference = Integer.toString(referenceNum).length();
+        for (int i =0; i< longueurReference; i++ ){
+            referenceNumFormatee += "0";
+        }
+        referenceNumFormatee += referenceNum;
+        String code = pEcritureComptable.getJournal().getCode();
+        String reference = code + "-"+annee+"/"+ referenceNumFormatee;
+        pEcritureComptable.setReference(reference);
 
-    }
+        // enregistrement de la séquence en persistance
+        this.getDaoProxy().getComptabiliteDao().insertSequenceEcritureComptable(new SequenceEcritureComptable( annee, referenceNum, code ));
+            }
 
     /**
      * {@inheritDoc}

@@ -34,6 +34,12 @@ public class SequenceEcritureComptable {
         derniereValeur = pDerniereValeur;
     }
 
+    public SequenceEcritureComptable(Integer pAnnee, Integer pDerniereValeur, String pCode) {
+        annee = pAnnee;
+        derniereValeur = pDerniereValeur;
+        code = pCode;
+    }
+
 
     // ==================== Getters/Setters ====================
     public Integer getAnnee() {
