@@ -3,6 +3,7 @@ package com.dummy.myerp.business.impl.manager;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.junit.Assert;
 import org.junit.Test;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
@@ -61,6 +62,8 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
         vEcritureComptable.setDate(new Date());
         vEcritureComptable.setLibelle("Libelle");
+        vEcritureComptable.setReference("AC-2019/00002");
+
         vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
                                                                                  null, new BigDecimal(123),
                                                                                  null));
@@ -78,6 +81,7 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
         vEcritureComptable.setDate(new Date());
         vEcritureComptable.setLibelle("Libelle");
+        vEcritureComptable.setReference("AC-2019/00002");
         vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
                 null, new BigDecimal(123),
                 new BigDecimal(123)));
@@ -99,7 +103,13 @@ public class ComptabiliteManagerImplTest {
 
 
     @Test
-    public void addReference() {
+    public void addReference() throws FunctionalException {
+        EcritureComptable vEcritureComptable = new EcritureComptable();
+        vEcritureComptable.setJournal(new JournalComptable("AC", "Achats"));
+        vEcritureComptable.setDate(new Date());
+        vEcritureComptable.setLibelle("Libelle de test");
+        manager.addReference(vEcritureComptable);
+        Assert.assertTrue(vEcritureComptable.toString(), vEcritureComptable.getReference().equals("AC-2019/00001"));
     }
 
     @Test
