@@ -1,6 +1,7 @@
 package com.dummy.myerp.business.impl.manager;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
@@ -79,8 +80,11 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                     (table sequence_ecriture_comptable)
          */
 
+
         List<SequenceEcritureComptable> listSequenceEcritureComptable = this.getListSequenceEcritureComptable();
-        int annee = pEcritureComptable.getDate().getYear();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(pEcritureComptable.getDate());
+        int annee = calendar.get(Calendar.YEAR);
         int referenceNum = 1;
             // si la liste des séquences n'est pas vide, on prend chaque séquence et si l'année de la séquence est celle de l'écriture, alors on regarde la référence (int)
             // on regarde la valeur la plus haute et on lui donne +1 ou à défaut reference vaut 1;
@@ -167,7 +171,23 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 
         // TODO ===== RG_Compta_5 : Format et contenu de la référence
         // vérifier que l'année dans la référence correspond bien à la date de l'écriture, idem pour le code journal...
-    }
+        // exemple d'une référence : BQ-2016/00001
+
+        String reference = pEcritureComptable.getReference();
+
+        // sortie du code journal et de l'année depuis la référence
+        String codeJournalReference = reference.substring(0,2);
+        String codeJournal = pEcritureComptable.getJournal().getCode();
+        int anneeReference = Integer.parseInt(reference.substring(3,7));
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(pEcritureComptable.getDate());
+        int annee = calendar.get(Calendar.YEAR);
+
+        if (!(codeJournalReference.equals(codeJournal)) || !(anneeReference == annee)){
+
+            throw new FunctionalException("L'écriture n'a pas une référence valide : " + reference + " code Journal : " + codeJournal + ", date : " + pEcritureComptable.getDate() );
+        }
+   }
 
 
     /**
