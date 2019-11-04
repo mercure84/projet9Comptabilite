@@ -13,7 +13,9 @@ import com.dummy.myerp.technical.exception.FunctionalException;
 
 public class ComptabiliteManagerImplTest {
 
+
     private ComptabiliteManagerImpl manager = new ComptabiliteManagerImpl();
+
 
 
     @Test
@@ -38,6 +40,7 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable.setJournal(new JournalComptable("TT", "Tests JM"));
         vEcritureComptable.setDate(new Date());
         vEcritureComptable.setLibelle("Libelle de test");
+        vEcritureComptable.setReference("XX-2018/00002");
         manager.checkEcritureComptableUnit(vEcritureComptable);
     }
 

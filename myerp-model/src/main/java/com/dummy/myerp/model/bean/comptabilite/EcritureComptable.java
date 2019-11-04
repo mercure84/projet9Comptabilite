@@ -40,11 +40,7 @@ public class EcritureComptable {
     private final List<LigneEcritureComptable> listLigneEcriture = new ArrayList<>();
 
 
-    // ==================== CONSTRUCTEURS ====================
 
-
-    public EcritureComptable() {
-    }
 
     // ==================== Getters/Setters ====================
     public Integer getId() {
