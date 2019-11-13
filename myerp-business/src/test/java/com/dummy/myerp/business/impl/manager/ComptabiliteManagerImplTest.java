@@ -10,6 +10,7 @@ import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
 import com.dummy.myerp.technical.exception.FunctionalException;
+import org.junit.runner.RunWith;
 
 
 public class ComptabiliteManagerImplTest {
@@ -98,18 +99,6 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable.setLibelle("Libelle de test");
         vEcritureComptable.setReference("XX-2018/00002");
         manager.checkEcritureComptableUnit(vEcritureComptable);
-    }
-
-
-
-    @Test
-    public void addReference() throws FunctionalException {
-        EcritureComptable vEcritureComptable = new EcritureComptable();
-        vEcritureComptable.setJournal(new JournalComptable("AC", "Achats"));
-        vEcritureComptable.setDate(new Date());
-        vEcritureComptable.setLibelle("Libelle de test");
-        manager.addReference(vEcritureComptable);
-        Assert.assertTrue(vEcritureComptable.toString(), vEcritureComptable.getReference().equals("AC-2019/00001"));
     }
 
     @Test
