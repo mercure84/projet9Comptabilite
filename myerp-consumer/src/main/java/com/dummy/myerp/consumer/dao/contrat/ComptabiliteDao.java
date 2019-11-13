@@ -90,10 +90,19 @@ public interface ComptabiliteDao {
     void deleteEcritureComptable(Integer pId);
 
     /**
-     * Insert une nouvelle séquence d'éEcriture comptable.
+     * Insert une nouvelle séquence d'écriture comptable.
      *
      * @param pSequenceEcritureComptable -
      */
     void insertSequenceEcritureComptable(SequenceEcritureComptable pSequenceEcritureComptable);
+
+
+    /**
+     * update une  séquence d'écriture comptable.
+     *
+     * @param pSequenceEcritureComptable -
+     */
+    void updateSequenceEcritureComptable(SequenceEcritureComptable pSequenceEcritureComptable);
+
 
 }

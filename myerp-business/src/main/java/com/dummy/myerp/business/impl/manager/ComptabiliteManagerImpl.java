@@ -84,20 +84,20 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         calendar.setTime(pEcritureComptable.getDate());
         int annee = calendar.get(Calendar.YEAR);
         int referenceNum = 1;
-            // si la liste des séquences n'est pas vide, on prend chaque séquence et si l'année de la séquence est celle de l'écriture, alors on regarde la référence (int)
+            // si la liste des séquences n'est pas vide, on regarde chaque séquence et si l'année de la séquence est celle de l'écriture, alors on analyse la "dernière valeur" (int)
             // on regarde la valeur la plus haute et on lui donne +1 ou à défaut reference vaut 1;
         if (listSequenceEcritureComptable.size() > 0) {
             for (SequenceEcritureComptable sequenceEcritureComptable:
                  listSequenceEcritureComptable) {
                 if (sequenceEcritureComptable.getAnnee() == annee){
-                    referenceNum = (sequenceEcritureComptable.getDerniereValeur() == referenceNum) ? (referenceNum + 1) : referenceNum;
+                    referenceNum = (sequenceEcritureComptable.getDerniereValeur() >= referenceNum) ? (sequenceEcritureComptable.getDerniereValeur() + 1) : referenceNum;
                 }
             } ;
         }
 
         // construction de la référence de l'écriture selon RG_Compta_5 :
         //on met la référence numérique en format XXXXX
-        String referenceNumFormatee = null ;
+        String referenceNumFormatee = "" ;
         int longueurReference = Integer.toString(referenceNum).length();
         for (int i =0; i< longueurReference; i++ ){
             referenceNumFormatee += "0";
@@ -108,7 +108,14 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         pEcritureComptable.setReference(reference);
 
         // enregistrement de la séquence en persistance
-        this.getDaoProxy().getComptabiliteDao().insertSequenceEcritureComptable(new SequenceEcritureComptable( annee, referenceNum, code ));
+        //si la referenceNum est restée à 1 ==> on fait un Insert, si elle est supérieure à 1 c'est qu'il faut faire un update
+
+        if (referenceNum ==1){
+            this.getDaoProxy().getComptabiliteDao().insertSequenceEcritureComptable(new SequenceEcritureComptable( annee, referenceNum, code ));
+        } else {
+            this.getDaoProxy().getComptabiliteDao().updateSequenceEcritureComptable(new SequenceEcritureComptable( annee, referenceNum, code ));
+        }
+
             }
 
     /**
