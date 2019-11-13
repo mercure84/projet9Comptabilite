@@ -23,7 +23,7 @@ public class ComptabiliteManagerImplIntegrationTest extends BusinessTestCase {
         Assert.assertFalse("La reqûete de test d'accès à la BDD a retourné un résultat null : cela peut indiquer un problème de connexion", manager.getListCompteComptable() == null);
     }
 
-    //prince du test : on vérifie que la référence est correctement ajoutée et qu'elle a le bon format (pattern correct)
+    //prince du test : on vérifie que la référence est correctement ajoutée, attention ce test ne vérifie pas le format de la référence
     @Test
     public void addReference() throws FunctionalException {
         EcritureComptable vEcritureComptable = new EcritureComptable();
@@ -31,8 +31,7 @@ public class ComptabiliteManagerImplIntegrationTest extends BusinessTestCase {
         vEcritureComptable.setDate(new Date());
         vEcritureComptable.setLibelle("Libelle de test");
         manager.addReference(vEcritureComptable);
-        System.out.println(vEcritureComptable.toString());
-        Assert.assertTrue(vEcritureComptable.toString(), vEcritureComptable.getReference()!=null);
+        Assert.assertTrue("Référence ajoutée: " + vEcritureComptable.getReference(), vEcritureComptable.getReference()!=null);
     }
 
 
