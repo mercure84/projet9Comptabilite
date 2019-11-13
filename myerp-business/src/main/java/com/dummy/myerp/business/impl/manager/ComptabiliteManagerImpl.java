@@ -99,7 +99,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         //on met la référence numérique en format XXXXX
         String referenceNumFormatee = "" ;
         int longueurReference = Integer.toString(referenceNum).length();
-        for (int i =0; i< longueurReference; i++ ){
+        for (int i =0; i< (5-longueurReference); i++ ){
             referenceNumFormatee += "0";
         }
         referenceNumFormatee += referenceNum;
