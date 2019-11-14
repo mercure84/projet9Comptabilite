@@ -1,8 +1,9 @@
-package com.dummy.myerp.business.impl.manager;
+package com.dummy.myerp.business.testbusiness;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.dummy.myerp.business.impl.manager.ComptabiliteManagerImpl;
 import org.junit.Test;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
@@ -99,19 +100,4 @@ public class ComptabiliteManagerImplTest {
         manager.checkEcritureComptableUnit(vEcritureComptable);
     }
 
-    @Test
-    public void checkEcritureComptable() {
-    }
-
-    @Test
-    public void insertEcritureComptable() {
-    }
-
-    @Test
-    public void updateEcritureComptable() {
-    }
-
-    @Test
-    public void deleteEcritureComptable() {
-    }
 }
