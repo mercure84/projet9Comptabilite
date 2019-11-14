@@ -58,7 +58,6 @@ public class ComptabiliteManagerImplIntegrationTest extends BusinessTestCase {
     //On teste 1 écriture qui possède la même référence qu'une écriture de la persistance
     @Test(expected = FunctionalException.class)
     public void checkEcritureComptableContextRG6() throws FunctionalException {
-
         //création de l'Ecriture, on sait que la base docker contient l'écriture avec la référence AC-2016/00001
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
@@ -75,11 +74,30 @@ public class ComptabiliteManagerImplIntegrationTest extends BusinessTestCase {
                 new BigDecimal(123)));
         manager.checkEcritureComptableUnit(vEcritureComptable);
         manager.checkEcritureComptableContext(vEcritureComptable);
-
     }
 
+
+    //enregistrement d'une EC dans la persistance
     @Test
-    public void insertEcritureComptable() {
+    public void insertEcritureComptable() throws FunctionalException {
+
+        // création de l'EC
+        EcritureComptable vEcritureComptable;
+        vEcritureComptable = new EcritureComptable();
+        vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
+        Calendar date = new GregorianCalendar(2016, 1,3);
+        vEcritureComptable.setDate(date.getTime());
+        vEcritureComptable.setLibelle("Libelle de test");
+        manager.addReference(vEcritureComptable);
+        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(512),
+                null, new BigDecimal(123),
+                null));
+        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(411),
+                null, null,
+                new BigDecimal(123)));
+        //enregistrement de l'EC
+        manager.insertEcritureComptable(vEcritureComptable);
+
     }
 
     @Test
@@ -88,5 +106,8 @@ public class ComptabiliteManagerImplIntegrationTest extends BusinessTestCase {
 
     @Test
     public void deleteEcritureComptable() {
+
+
+
     }
 }
