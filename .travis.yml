@@ -6,8 +6,9 @@ services:
   - docker
 
 before_install:
-  - cd docker/dev/
+  - cd docker/dev
   - docker-compose up
+  - cd ../..
 
 script:
   - mvn clean install -P test-business,test-consumer
