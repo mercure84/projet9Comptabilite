@@ -1,17 +1,17 @@
 package com.dummy.myerp.business.testbusiness;
 
+import com.dummy.myerp.business.impl.manager.ComptabiliteManagerImpl;
+import com.dummy.myerp.model.bean.comptabilite.*;
+import com.dummy.myerp.technical.exception.FunctionalException;
+import org.junit.Assert;
+import org.junit.Test;
+
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.regex.Pattern;
-
-import com.dummy.myerp.business.impl.manager.ComptabiliteManagerImpl;
-import com.dummy.myerp.model.bean.comptabilite.*;
-import org.junit.Assert;
-import org.junit.Test;
-import com.dummy.myerp.technical.exception.FunctionalException;
 
 
 public class ComptabiliteManagerImplTest extends BusinessTestCase {
