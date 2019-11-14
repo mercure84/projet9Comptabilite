@@ -1,6 +1,7 @@
 package com.dummy.myerp.business.testbusiness;
 
 import java.util.Date;
+import java.util.regex.Pattern;
 
 import com.dummy.myerp.business.impl.manager.ComptabiliteManagerImpl;
 import org.junit.Assert;
@@ -32,6 +33,21 @@ public class ComptabiliteManagerImplIntegrationTest extends BusinessTestCase {
         vEcritureComptable.setLibelle("Libelle de test");
         manager.addReference(vEcritureComptable);
         Assert.assertTrue("Référence ajoutée: " + vEcritureComptable.getReference(), vEcritureComptable.getReference()!=null);
+    }
+
+
+    //on teste ici le bon format de la référence à savoir comme cet exemple XX-2019/00088
+    @Test
+    public void addReferenceCheckFormat() throws FunctionalException{
+        EcritureComptable vEcritureComptable = new EcritureComptable();
+        vEcritureComptable.setJournal(new JournalComptable("AC", "Achats"));
+        vEcritureComptable.setDate(new Date());
+        vEcritureComptable.setLibelle("Libelle de test");
+        manager.addReference(vEcritureComptable);
+        boolean isReferenceOK = true;
+        String regexp = "[A-Z]{2}\\-[0-9]{4}/[0-9]{5}";
+        isReferenceOK = Pattern.matches(regexp, vEcritureComptable.getReference());
+        Assert.assertTrue("Référence testée :" + vEcritureComptable.getReference(), isReferenceOK);
     }
 
 
