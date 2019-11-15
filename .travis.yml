@@ -14,7 +14,7 @@ before_install:
   - cd ../..
 
 script:
-  - mvn clean package
+  - mvn clean install
   - mvn cobertura:cobertura
 
 after_success:
