@@ -17,3 +17,6 @@ after_script:
   - cd docker/dev
   - docker-compose stop
   - docker-compose rm -v -f
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash) -t 4a3c55b6-b6ab-41f3-b06b-c3f29e97cfe7

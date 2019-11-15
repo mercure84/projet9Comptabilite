@@ -1,18 +1,18 @@
 package com.dummy.myerp.consumer.dao.impl.db.dao;
 
-import java.sql.Types;
-import java.util.List;
-
+import com.dummy.myerp.consumer.dao.contrat.ComptabiliteDao;
 import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.*;
+import com.dummy.myerp.consumer.db.AbstractDbConsumer;
+import com.dummy.myerp.consumer.db.DataSourcesEnum;
 import com.dummy.myerp.model.bean.comptabilite.*;
+import com.dummy.myerp.technical.exception.NotFoundException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import com.dummy.myerp.consumer.dao.contrat.ComptabiliteDao;
-import com.dummy.myerp.consumer.db.AbstractDbConsumer;
-import com.dummy.myerp.consumer.db.DataSourcesEnum;
-import com.dummy.myerp.technical.exception.NotFoundException;
+
+import java.sql.Types;
+import java.util.List;
 
 /**
  * Implémentation de l'interface {@link ComptabiliteDao}
@@ -35,7 +35,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
     /**
      * Constructeur.
      */
-    protected ComptabiliteDaoImpl() {
+    public ComptabiliteDaoImpl() {
         super();
     }
 
