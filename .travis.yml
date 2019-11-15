@@ -18,5 +18,3 @@ after_script:
   - docker-compose stop
   - docker-compose rm -v -f
 
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
