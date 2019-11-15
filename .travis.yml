@@ -11,7 +11,7 @@ before_install:
   - cd ../..
 
 script:
-  - mvn cobertura:cobertura
+  - mvn clean install -P test-business,test-consumer
 
 after_script:
   - cd docker/dev
