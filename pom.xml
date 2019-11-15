@@ -260,10 +260,7 @@
             </dependency>
 
 
-
-
-
-        </dependencies>
+            </dependencies>
     </dependencyManagement>
 
 
@@ -388,6 +385,21 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
                     <version>1.10</version>
+                </plugin>
+
+                <!-- ===== PLUGIN REPORT CODECOV ===== -->
+
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>cobertura-maven-plugin</artifactId>
+                    <version>2.7</version>
+                    <configuration>
+                        <formats>
+                            <format>html</format>
+                            <format>xml</format>
+                        </formats>
+                        <check />
+                    </configuration>
                 </plugin>
 
             </plugins>
