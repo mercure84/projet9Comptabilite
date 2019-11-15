@@ -1,10 +1,10 @@
 package com.dummy.myerp.model.bean.comptabilite;
 
-import java.math.BigDecimal;
-
 import org.apache.commons.lang3.ObjectUtils;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.math.BigDecimal;
 
 
 public class EcritureComptableTest {
@@ -91,4 +91,11 @@ public class EcritureComptableTest {
         Assert.assertEquals(vEcritureNull.getTotalCredit(), new BigDecimal("0" ));
 
     }
+
+    @Test
+    public void toStringTest(){
+        EcritureComptable vEcriture = new EcritureComptable();
+        vEcriture.toString();
+    }
+
 }
