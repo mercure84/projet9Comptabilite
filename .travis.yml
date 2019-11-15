@@ -1,6 +1,9 @@
-sudo: required
-
 language: java
+
+jdk:
+  - oraclejdk8
+
+sudo: required
 
 services:
   - docker
@@ -8,13 +11,20 @@ services:
 before_install:
   - cd docker/dev
   - docker-compose up -d
-  - cd ../..
+  - docker ps -a
+
+before_script:
+  - cd ../../src
 
 script:
-  - mvn clean install -P test-business,test-consumer
-
-after_script:
-  - cd docker/dev
+  - mvn test -Ptest-consumer,test-business
+  - cd ../docker/dev
   - docker-compose stop
-  - docker-compose rm -v -f
+  - docker-compose rm -f
+  - docker-compose up -d
+  - docker ps -a
+  - cd ../../src
 
+after_success:
+  - mvn --file pom.xml cobertura:cobertura -P test-consumer,test-business
+  - bash <(curl -s https://codecov.io/bash)
