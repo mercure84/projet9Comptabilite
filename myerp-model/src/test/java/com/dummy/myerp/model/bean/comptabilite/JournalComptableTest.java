@@ -18,4 +18,13 @@ public class JournalComptableTest {
         journalComptable.toString();
     }
 
-}
+    // test constructeur avec paramètre
+    @Test
+    public void testJournalComptableBis() {
+
+        JournalComptable journalComptable = new JournalComptable("ABC", "Test de libellé");
+        journalComptable.toString();
+
+    }
+
+    }

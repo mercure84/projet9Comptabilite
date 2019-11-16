@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 
 public class EcritureComptableTest {
@@ -97,5 +98,29 @@ public class EcritureComptableTest {
         EcritureComptable vEcriture = new EcritureComptable();
         vEcriture.toString();
     }
+
+
+    @Test
+    public void testEcritureComptableConstructeur(){
+        EcritureComptable vEcriture = new EcritureComptable();
+        vEcriture.setLibelle("Libellé de mon écriture");
+        vEcriture.setReference("Test de référence");
+        vEcriture.setDate(new Date());
+        vEcriture.setId(99999);
+        vEcriture.setJournal(new JournalComptable("ABC", "Libellé de journal"));
+        vEcriture.toString();
+        vEcriture.getId();
+        vEcriture.getJournal();
+        vEcriture.getReference();
+        vEcriture.getDate();
+        vEcriture.getLibelle();
+
+
+
+
+
+    }
+
+
 
 }
