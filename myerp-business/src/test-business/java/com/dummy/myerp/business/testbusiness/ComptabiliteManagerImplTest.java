@@ -108,7 +108,7 @@ public class ComptabiliteManagerImplTest extends BusinessTestCase {
         Assert.assertFalse("La reqûete de test d'accès à la BDD a retourné un résultat null : cela peut indiquer un problème de connexion", manager.getListCompteComptable() == null);
     }
 
-    //prince du test : on vérifie que la référence est correctement ajoutée, attention ce test ne vérifie pas le format de la référence
+    //principe du test : on vérifie que la référence est correctement ajoutée, attention ce test ne vérifie pas le format de la référence
     @Test
     public void addReference() throws FunctionalException {
         EcritureComptable vEcritureComptable = new EcritureComptable();
@@ -133,6 +133,23 @@ public class ComptabiliteManagerImplTest extends BusinessTestCase {
         isReferenceOK = Pattern.matches(regexp, vEcritureComptable.getReference());
         Assert.assertTrue("Référence testée :" + vEcritureComptable.getReference(), isReferenceOK);
     }
+
+    // test d'un mauvais format de la référence
+    @Test
+    public void addReferenceCheckFormatEchec() throws FunctionalException{
+        EcritureComptable vEcritureComptable = new EcritureComptable();
+        vEcritureComptable.setJournal(new JournalComptable("AC", "Achats"));
+        vEcritureComptable.setDate(new Date());
+        vEcritureComptable.setLibelle("Libelle de test");
+        manager.addReference(vEcritureComptable);
+        vEcritureComptable.setReference("ZZZ-2000000/blabla");
+        boolean isReferenceOK = true;
+        String regexp = "[A-Z]{2}\\-[0-9]{4}/[0-9]{5}";
+        isReferenceOK = Pattern.matches(regexp, vEcritureComptable.getReference());
+        Assert.assertFalse("Référence testée sensée être fausse :" + vEcritureComptable.getReference(), isReferenceOK);
+    }
+
+
 
     //on teste que la référence d'une Ecriture Comptable est unique : RG6
     //On teste 1 écriture qui possède la même référence qu'une autre écriture
@@ -221,6 +238,7 @@ public class ComptabiliteManagerImplTest extends BusinessTestCase {
 
     }
 
+    // test updateEC succès
     @Test
     public void updateEcritureComptable() throws FunctionalException {
 
@@ -234,6 +252,26 @@ public class ComptabiliteManagerImplTest extends BusinessTestCase {
 
 
     }
+
+    // test updateEC échec
+
+    @Test(expected = FunctionalException.class)
+    public void updateEcritureComptableEchec() throws FunctionalException {
+
+        try {
+            EcritureComptable vEcritureComptable = manager.getListEcritureComptable().get(0);
+            vEcritureComptable.setLibelle("Nouveau libellé de test");
+            vEcritureComptable.setReference("mauvaise reference ici");
+            manager.updateEcritureComptable(vEcritureComptable);}
+        catch (NullPointerException exception){
+            System.out.println("la table est vide");
+        }
+
+
+    }
+
+
+
 
     @Test
     public void deleteEcritureComptable() throws FunctionalException {
