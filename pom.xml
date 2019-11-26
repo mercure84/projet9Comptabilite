@@ -92,6 +92,12 @@
         <profile>
             <id>test-consumer</id>
         </profile>
+        <!-- Profile pour lancer uniquement les tests unitaire de la couche Business (aucun accès à la BDD requis)-->
+
+        <profile>
+            <id>test-business-unitaire</id>
+        </profile>
+
     </profiles>
 
 
