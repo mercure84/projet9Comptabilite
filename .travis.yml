@@ -16,10 +16,10 @@ before_script:
   - cd ../../
 
 script:
-  - mvn test -P test-consumer,test-business
+  - mvn test -P test-business-unitaire,test-consumer,test-business
 
 after_success:
-  - mvn --file pom.xml cobertura:cobertura -P test-consumer,test-business,test-business-unitaire
+  - mvn --file pom.xml cobertura:cobertura -P test-business-unitaire,test-consumer,test-business,
   - bash <(curl -s https://codecov.io/bash)
 
 
