@@ -1,4 +1,3 @@
-package com.dummy.myerp.business.testbusinessunitaire;
 
 import com.dummy.myerp.business.impl.manager.ComptabiliteManagerImpl;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
@@ -20,7 +19,7 @@ public class ComptabiliteManagerImplTestUnitaire {
 
 
     @Test
-    public void checkEcritureComptableUnit() throws Exception {
+    public void checkEcritureComptableUnit() throws FunctionalException {
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
@@ -39,7 +38,7 @@ public class ComptabiliteManagerImplTestUnitaire {
 
 
     @Test(expected = FunctionalException.class)
-    public void checkEcritureComptableUnitRG2() throws Exception {
+    public void checkEcritureComptableUnitRG2() throws FunctionalException {
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
@@ -56,7 +55,7 @@ public class ComptabiliteManagerImplTestUnitaire {
     }
 
     @Test(expected = FunctionalException.class)
-    public void checkEcritureComptableUnitRG3() throws Exception {
+    public void checkEcritureComptableUnitRG3() throws FunctionalException {
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
@@ -75,7 +74,7 @@ public class ComptabiliteManagerImplTestUnitaire {
 
     // cas de test de la RG3 où l'écriture n'a qu'une seule ligne où le débit vaut le crédit
     @Test(expected = FunctionalException.class)
-    public void checkEcritureComptableUnitRG3bis() throws Exception {
+    public void checkEcritureComptableUnitRG3bis() throws FunctionalException {
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
@@ -91,7 +90,7 @@ public class ComptabiliteManagerImplTestUnitaire {
 
 
     @Test(expected = FunctionalException.class)
-    public void checkEcritureComptableUnitRG5() throws Exception {
+    public void checkEcritureComptableUnitRG5() throws FunctionalException {
         EcritureComptable vEcritureComptable = new EcritureComptable();
         vEcritureComptable.setJournal(new JournalComptable("TT", "Tests JM"));
         vEcritureComptable.setDate(new Date());
@@ -100,7 +99,23 @@ public class ComptabiliteManagerImplTestUnitaire {
         manager.checkEcritureComptableUnit(vEcritureComptable);
     }
 
-
+    @Test(expected = FunctionalException.class)
+    //on passe 3 chiffres après la virgule
+    public void checkEcritureComptableUnitRG7() throws FunctionalException {
+        EcritureComptable vEcritureComptable;
+        vEcritureComptable = new EcritureComptable();
+        vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
+        vEcritureComptable.setDate(new Date());
+        vEcritureComptable.setLibelle("Libelle");
+        vEcritureComptable.setReference("AC-2019/00002");
+        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
+                null, new BigDecimal(123.695),
+                new BigDecimal(123.695)));
+        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(2),
+                null, null,
+                new BigDecimal(123)));
+        manager.checkEcritureComptableUnit(vEcritureComptable);
+    }
 
 
 

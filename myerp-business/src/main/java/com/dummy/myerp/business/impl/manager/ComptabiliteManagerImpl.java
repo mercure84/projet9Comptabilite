@@ -192,7 +192,29 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 
             throw new FunctionalException("L'écriture n'a pas une référence valide : " + reference + " code Journal : " + codeJournal + ", date : " + pEcritureComptable.getDate() );
         }
-   }
+
+        //TODO ===> RG 7 : 2 chiffres maximum après la virgule pour les montants ==> DONE BONUS
+
+        //on prend chaque ligne de l'écriture comptable et on regarde son débit et son crédit :
+        for (LigneEcritureComptable vLigneEcritureComptable : pEcritureComptable.getListLigneEcriture()) {
+            if (getNumberOfDecimalPlaces(vLigneEcritureComptable.getCredit())>=2){
+                throw new FunctionalException("L'écriture n'a pas un montant valide au Crédit : " + vLigneEcritureComptable.getCredit() );
+                } else {
+            if (getNumberOfDecimalPlaces(vLigneEcritureComptable.getDebit())>=2){
+                throw new FunctionalException("L'écriture n'a pas un montant valide au Débit : " + vLigneEcritureComptable.getDebit() );
+            }}
+        }
+
+    }
+
+    int getNumberOfDecimalPlaces(BigDecimal bigDecimal) throws NullPointerException {
+        try{String string = bigDecimal.stripTrailingZeros().toPlainString();
+        int index = string.indexOf(".");
+        return index < 0 ? 0 : string.length() - index - 1;}
+        catch(NullPointerException e){
+            return  0;
+        }
+    }
 
 
     /**
